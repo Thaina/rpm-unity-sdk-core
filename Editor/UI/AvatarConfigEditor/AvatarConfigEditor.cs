@@ -49,7 +49,7 @@ namespace ReadyPlayerMe.Core.Editor
             SetupTextureAtlas();
             SetupTextureSizeLimit();
             SetupUseHands();
-            SetupCompressionPackages();
+            //SetupCompressionPackages();
             SetupTextureChannel();
             SetupMorphTargets();
 
@@ -117,70 +117,70 @@ namespace ReadyPlayerMe.Core.Editor
             );
         }
 
-        private void SetupCompressionPackages()
-        {
-            var useDracoCompression = root.Q<Toggle>("UseDracoCompression");
-            var useMeshOptCompression = root.Q<Toggle>("UseMeshOptCompression");
-
-            var optimizationPackages =root.Q<Foldout>("OptimizationPackages");
-            optimizationPackages.RegisterValueChangedCallback(x =>
-            {
-                useDracoCompression.SetValueWithoutNotify(ModuleInstaller.IsModuleInstalled(ModuleList.DracoCompression.name));
-                useMeshOptCompression.SetValueWithoutNotify(PackageManagerHelper.IsPackageInstalled(MESH_OPT_PACKAGE_NAME));
-            });
-            
-            useDracoCompression.RegisterValueChangedCallback(x =>
-                {
-                    avatarConfigTarget.UseDracoCompression = x.newValue;
-                    if (ModuleInstaller.IsModuleInstalled(ModuleList.DracoCompression.name))
-                    {
-                        return;
-                    }
-
-                    if (EditorUtility.DisplayDialog(
-                            DIALOG_TITLE,
-                            string.Format(DIALOG_MESSAGE, "Draco compression", ModuleList.DracoCompression.name), 
-                            DIALOG_OK, 
-                            DIALOG_CANCEL))
-                    {
-                        ModuleInstaller.AddModuleRequest(ModuleList.DracoCompression.Identifier);
-                    }
-                    else
-                    {
-                        avatarConfigTarget.UseDracoCompression = false;
-                        useDracoCompression.SetValueWithoutNotify(false);
-                    }
-
-                    serializedObject.ApplyModifiedProperties();
-                }
-            );
-          
-            useMeshOptCompression.RegisterValueChangedCallback(x =>
-                {
-                    avatarConfigTarget.UseMeshOptCompression = x.newValue;
-                    if (PackageManagerHelper.IsPackageInstalled(MESH_OPT_PACKAGE_NAME))
-                    {
-                        return;
-                    }
-
-                    if (EditorUtility.DisplayDialog(
-                            DIALOG_TITLE,
-                            string.Format(DIALOG_MESSAGE, "Mesh opt compression", MESH_OPT_PACKAGE_NAME), 
-                            DIALOG_OK, 
-                            DIALOG_CANCEL))
-                    {
-                        PackageManagerHelper.AddPackage(MESH_OPT_PACKAGE_NAME);
-                    }
-                    else
-                    {
-                        avatarConfigTarget.UseMeshOptCompression = false;
-                        useMeshOptCompression.SetValueWithoutNotify(false);
-                    }
-
-                    serializedObject.ApplyModifiedProperties();
-                }
-            );
-        }
+        // private void SetupCompressionPackages()
+        // {
+        //     var useDracoCompression = root.Q<Toggle>("UseDracoCompression");
+        //     var useMeshOptCompression = root.Q<Toggle>("UseMeshOptCompression");
+        //
+        //     var optimizationPackages =root.Q<Foldout>("OptimizationPackages");
+        //     optimizationPackages.RegisterValueChangedCallback(x =>
+        //     {
+        //         useDracoCompression.SetValueWithoutNotify(ModuleInstaller.IsModuleInstalled(ModuleList.DracoCompression.name));
+        //         useMeshOptCompression.SetValueWithoutNotify(PackageManagerHelper.IsPackageInstalled(MESH_OPT_PACKAGE_NAME));
+        //     });
+        //     
+        //     useDracoCompression.RegisterValueChangedCallback(x =>
+        //         {
+        //             avatarConfigTarget.UseDracoCompression = x.newValue;
+        //             if (ModuleInstaller.IsModuleInstalled(ModuleList.DracoCompression.name))
+        //             {
+        //                 return;
+        //             }
+        //
+        //             if (EditorUtility.DisplayDialog(
+        //                     DIALOG_TITLE,
+        //                     string.Format(DIALOG_MESSAGE, "Draco compression", ModuleList.DracoCompression.name), 
+        //                     DIALOG_OK, 
+        //                     DIALOG_CANCEL))
+        //             {
+        //                 ModuleInstaller.AddModuleRequest(ModuleList.DracoCompression.Identifier);
+        //             }
+        //             else
+        //             {
+        //                 avatarConfigTarget.UseDracoCompression = false;
+        //                 useDracoCompression.SetValueWithoutNotify(false);
+        //             }
+        //
+        //             serializedObject.ApplyModifiedProperties();
+        //         }
+        //     );
+        //   
+        //     useMeshOptCompression.RegisterValueChangedCallback(x =>
+        //         {
+        //             avatarConfigTarget.UseMeshOptCompression = x.newValue;
+        //             if (PackageManagerHelper.IsPackageInstalled(MESH_OPT_PACKAGE_NAME))
+        //             {
+        //                 return;
+        //             }
+        //
+        //             if (EditorUtility.DisplayDialog(
+        //                     DIALOG_TITLE,
+        //                     string.Format(DIALOG_MESSAGE, "Mesh opt compression", MESH_OPT_PACKAGE_NAME), 
+        //                     DIALOG_OK, 
+        //                     DIALOG_CANCEL))
+        //             {
+        //                 PackageManagerHelper.AddPackage(MESH_OPT_PACKAGE_NAME);
+        //             }
+        //             else
+        //             {
+        //                 avatarConfigTarget.UseMeshOptCompression = false;
+        //                 useMeshOptCompression.SetValueWithoutNotify(false);
+        //             }
+        //
+        //             serializedObject.ApplyModifiedProperties();
+        //         }
+        //     );
+        // }
 
         private void SetupTextureChannel()
         {

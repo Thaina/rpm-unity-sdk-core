@@ -245,12 +245,12 @@ namespace ReadyPlayerMe.Core.Analytics
                 { Constants.Properties.ALLOW_ANALYTICS, true }
             };
 
-            Dictionary<string, string> modules = ModuleList.GetInstalledModuleVersionDictionary();
-
-            foreach (KeyValuePair<string, string> module in modules)
-            {
-                userProperties.Add(module.Key, module.Value);
-            }
+            // Dictionary<string, string> modules = ModuleList.GetInstalledModuleVersionDictionary();
+            //
+            // foreach (KeyValuePair<string, string> module in modules)
+            // {
+            //     userProperties.Add(module.Key, module.Value);
+            // }
 
             LogEvent(Constants.EventName.SET_USER_PROPERTIES, null, userProperties);
         }
