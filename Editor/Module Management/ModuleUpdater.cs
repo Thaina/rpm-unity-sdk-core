@@ -57,12 +57,18 @@ namespace ReadyPlayerMe.Core.Editor
         [MenuItem("Ready Player Me/Check For Updates", priority = 23)]
         public static void CheckForUpdates()
         {
+# if RPM_DEVELOPMENT
+            return;
+#endif
             AnalyticsEditorLogger.EventLogger.LogCheckForUpdates();
             Check();
         }
 
         private static void Check(bool isStartup = false)
         {
+# if RPM_DEVELOPMENT
+            return;
+#endif
             // Get PackageInfo array from RPM Module package.json files
             PackageInfo[] packages = AssetDatabase.FindAssets(ASSET_FILTER)
                 .Select(AssetDatabase.GUIDToAssetPath)
@@ -107,6 +113,9 @@ namespace ReadyPlayerMe.Core.Editor
         private static async void FetchReleases(string packageName, string packageUrl, string releasesUrl,
             Version currentVersion)
         {
+# if RPM_DEVELOPMENT
+            return;
+#endif
             UnityWebRequest request = UnityWebRequest.Get(releasesUrl);
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone) await Task.Yield();
@@ -189,6 +198,9 @@ namespace ReadyPlayerMe.Core.Editor
         /// <param name="latest">The new version of the package.</param>
         private static void UpdateModule(string name, string url, Version current, Version latest)
         {
+# if RPM_DEVELOPMENT
+            return;
+#endif
             url += "#v" + latest;
             CleanRedundantAvatarLoader();
             RemoveRequest removeRequest = Client.Remove(name);
