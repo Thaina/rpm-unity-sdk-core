@@ -45,6 +45,9 @@ namespace ReadyPlayerMe.Core.Editor
 
         static ModuleUpdater()
         {
+# if RPM_DEVELOPMENT
+            return;
+#endif
             EntryPoint.Startup += () => Check(true);
         }
 
